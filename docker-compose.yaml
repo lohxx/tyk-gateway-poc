@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  tyk-gateway:
+    image: docker.tyk.io/tyk-gateway/tyk-gateway:v4.1.0
+    ports:
+      - 8080:8080
+    networks:
+      - tyk
+    volumes:
+      - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
+      - ./apps:/opt/tyk-gateway/apps
+      - ./middleware:/opt/tyk-gateway/middleware
+      - ./certs:/opt/tyk-gateway/certs
+    environment:
+      - TYK_GW_SECRET=foo
+    depends_on:
+      - tyk-redis
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  tyk-redis:
+    image: redis:6.2.7-alpine
+    networks:
+      - tyk
+    ports:
+      - 6379:6379
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "uvicorn main:app --reload --port=8000 --host 0.0.0.0"
+    ports:
+      - "8000:8000"
+    networks:
+      - tyk
+    depends_on:
+      - tyk-gateway
+
+networks:
+  tyk:
