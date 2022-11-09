@@ -8,6 +8,7 @@ authors = ["Lohanna Sarah <lohanna.dev@gmail.com>"]
 python = "^3.10"
 fastapi = "^0.86.0"
 uvicorn = "^0.19.0"
+requests = "^2.28.1"
 
 [tool.poetry.dev-dependencies]
 
