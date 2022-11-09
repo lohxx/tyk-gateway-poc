@@ -7,6 +7,17 @@ from gateway import TykGateway as tyk
 
 REGEX = r"basic|bearer"
 
+def setQuotas(user_data, session):
+    session.quota_max = user_data['quota_max']
+    session.quota_remaining = user_data['quota_remaining']
+    session.quota_renewal_rate = user_data['quota_renewal_rate']
+
+
+def setRateLimit(user_data, session):
+    session.allowance = user_data['allowance']
+    session.rate = user_data['rate']
+    session.per = user_data['per']
+
 
 @Hook
 def MyAuthMiddleware(request, session, metadata, spec):
@@ -25,7 +36,10 @@ def MyAuthMiddleware(request, session, metadata, spec):
     
     tyk.log(f'api key: {api_key} - {key}', "info")
     conn = client.HTTPConnection("localhost", 8080)
-    conn.request(method='GET', url=f'http://localhost:8080/tyk/keys/{key.strip()}', headers={'x-tyk-authorization': 'foo'})
+    conn.request(
+        method='GET',
+        headers={'x-tyk-authorization': 'foo'},
+        url=f'http://localhost:8080/tyk/keys/{key.strip()}')
     response = conn.getresponse()
 
     if response.status != 200:
@@ -34,6 +48,7 @@ def MyAuthMiddleware(request, session, metadata, spec):
     user_data = json.loads(response.read())
     tyk.log(str(user_data), "info")
     metadata['token'] = key
-    # definir a session das quotas e rate limit aqui..
+    setQuotas(user_data, session)
+    setRateLimit(user_data, session)
 
     return request, session, metadata
