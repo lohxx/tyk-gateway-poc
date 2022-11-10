@@ -23,11 +23,11 @@ usuário criado, chave: 15f48e1b975284942a02e7c94eba27159
 ## Fazendo chamadas
 
 ``` bash
-curl 'http://localhost:8080/test/' -H 'Autorização: Basic 15f48e1b975284942a02e7c94eba27159'
+curl 'http://localhost:8080/test/' -H 'Authorization: Basic 15f48e1b975284942a02e7c94eba27159'
 ```
 
 ``` bash
-curl 'http://localhost:8080/test/' -H 'Autorização: Bearer 15f48e1b975284942a02e7c94eba27159'
+curl 'http://localhost:8080/test/' -H 'Authorization: Bearer 15f48e1b975284942a02e7c94eba27159'
 ```
 
 ``` bash
