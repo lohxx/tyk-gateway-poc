@@ -10,7 +10,9 @@ Para iniciar a execução dos contêineres: docker compose up.
 
 ## Configurar APIs tyk.
 
-Para interagir com nossa mock api é necessário criá-la no tyk, para isso basta executar o script python: `python utils.py setupapi`. Este script criará uma API chamada test e imprimirá as chaves que você pode usar para fazer chamadas.
+Para interagir com nossa mock api é necessário criá-la no tyk, para isso basta executar o script python: `python utils.py setupapi`.
+
+Este script criará uma API chamada test e imprimirá as chaves que você pode usar para fazer chamadas.
 
 ``` bash
 python utils.py setupapi
