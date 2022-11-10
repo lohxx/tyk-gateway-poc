@@ -34,5 +34,6 @@ curl 'http://localhost:8080/test/?api_key=1caf9578da40e41bbb20cc34895932f56'
 
 ## Testes quota e rate limit
 
-Para testar o limite de taxa configurado, chame o comando cli `python utils.py callsratelimit`
+Para testar o limite de taxa configurado, chame o comando cli `python utils.py callsratelimit`.
+
 Para testar as cotas configuradas, chame o comando cli `python utils.py callsquota`
