@@ -1,7 +1,6 @@
 {
     "file_list": [
-      "middleware.py",
-      "login.py"
+      "middleware.py"
     ],
     "custom_middleware": {
       "driver": "python",

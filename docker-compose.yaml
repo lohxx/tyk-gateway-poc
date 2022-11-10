@@ -15,8 +15,6 @@ services:
       - TYK_GW_SECRET=foo
     depends_on:
       - tyk-redis
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
   tyk-redis:
     image: redis:6.2.7-alpine
@@ -36,6 +34,17 @@ services:
       - tyk
     depends_on:
       - tyk-gateway
+
+  bundle-server:
+    image: python:3.10-slim-bullseye
+    command: "python -m http.server 9000"
+    working_dir: "/app/auth-plugin"
+    volumes:
+      - ./auth-plugin/:/app/auth-plugin
+    ports:
+      - "9000:9000"
+    networks:
+      - tyk
 
 networks:
   tyk:

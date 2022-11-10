@@ -42,6 +42,7 @@ def MyAuthMiddleware(request, session, metadata, spec):
         url=f'http://localhost:8080/tyk/keys/{key.strip()}')
     response = conn.getresponse()
 
+    tyk.log(f'response: {response.status} - {key}', "info")
     if response.status != 200:
         return request, session, metadata
 
@@ -52,3 +53,8 @@ def MyAuthMiddleware(request, session, metadata, spec):
     setRateLimit(user_data, session)
 
     return request, session, metadata
+
+
+@Hook
+def ResponseHook(request, response, session, metadata, spec):
+    pass
